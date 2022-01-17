@@ -1,0 +1,35 @@
+<div style="padding-left: 30%; background-color: azure">
+    <mat-card style="width: 50%; height: 50%;">
+      <mat-card-title >
+        <strong style="font: bold;font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Add Inventory</strong> 
+      </mat-card-title>
+      <mat-card-content >
+        <form [formGroup]="addInventoryForm"  autocomplete="off" (ngSubmit)="onSubmit()">
+          <div>           
+            <mat-form-field>
+              <input formControlName="name"  placeholder="Enter inventory name *" matInput>
+              <mat-error *ngIf="addInventoryForm.controls['name'].hasError('minlength')">name should not be less than 3 letters</mat-error>
+              <mat-error *ngIf="addInventoryForm.controls['name'].hasError('maxlength')">name should not be greater than 50 letters</mat-error>
+              <mat-error *ngIf="addInventoryForm.controls['name'].hasError('pattern')">name should not contain any special character or numbers</mat-error>
+              <mat-error *ngIf="addInventoryForm.controls['name'].hasError('required')">Inventory Name is required</mat-error>              
+            </mat-form-field>
+          </div>
+          <div>
+            <div>            
+              <mat-form-field>
+                <input formControlName="quantity" placeholder="Enter quantity of inventory"  matInput type="number">              
+                <mat-error *ngIf="addInventoryForm.controls['quantity'].hasError('min')">Quantity should not be less than 1 </mat-error>
+                <mat-error *ngIf="addInventoryForm.controls['quantity'].hasError('max')">Quantity should not be greater than 9999</mat-error>         
+                <mat-error *ngIf="addInventoryForm.controls['quantity'].hasError('required')">Quantity is required</mat-error>                   
+              </mat-form-field>
+            </div>                      
+          </div> 
+        <br><br>                
+          <mat-card-actions>
+              <button mat-raised-button color="success" [disabled]="checkSubmitButtonEnabled()" type="submit">Submit</button>
+              <button mat-raised-button color="warn" (click)="cancel()" type="button">Cancel</button>
+          </mat-card-actions>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>

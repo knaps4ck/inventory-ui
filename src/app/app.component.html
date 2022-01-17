@@ -1,0 +1,46 @@
+<app-header></app-header>
+<div>
+    <mat-form-field>
+      <span matPrefix> </span>
+      <input type="tel" matInput placeholder="Search" name= "search" [(ngModel)]= "search">
+      <button matSuffix mat-raised-button (click)="display(search)"><mat-icon >search</mat-icon></button>
+      </mat-form-field>    
+  <div>
+    <button mat-raised-button color="primary" (click)="addInventory()">Add inventory</button>
+    <button mat-raised-button [hidden]="dataSource.length === 0" color="primary" (click)="exporter.exportTable('csv', {fileName:'inventory_list'})">Export CSV</button>
+  </div>  
+    <mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter" [hiddenColumns]="hiddenColumns">
+      
+      <ng-container matColumnDef="SNo.">
+        <mat-header-cell *matHeaderCellDef> SNo. </mat-header-cell>
+        <mat-cell *matCellDef="let i = index"> {{i + 1}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+        <mat-cell *matCellDef="let inventory"> {{inventory.name}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="quantity">
+        <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+        <mat-cell *matCellDef="let inventory"> {{inventory.quantity}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="operations">
+        <mat-header-cell *matHeaderCellDef> Operations </mat-header-cell>
+        <mat-cell *matCellDef="let inventory">
+          <button mat-raised-button (click)="edit(inventory)">Edit</button>
+          <button mat-raised-button color="warn" (click)="delete(inventory)">Delete</button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>    
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>  
+    
+    <ng-template #elseBlock>
+      <p>No results found!</p>
+    </ng-template>  
+</div>
+<app-footer></app-footer>
